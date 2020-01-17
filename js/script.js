@@ -195,9 +195,9 @@
 
 		// Events.
 		if (cfg.environment.supports.touch) {
-			window.addEvent(AGJ.event.touch.start, onTouchPress);
-			window.addEvent(AGJ.event.touch.move, onTouchMove);
-			window.addEvent(AGJ.event.touch.end, onTouchRelease);
+			window.addEventListener(AGJ.event.touch.start, onTouchPress, { passive: false });
+			window.addEventListener(AGJ.event.touch.move, onTouchMove, { passive: false });
+			window.addEventListener(AGJ.event.touch.end, onTouchRelease, { passive: false });
 		} else {
 			window.addEvent(AGJ.event.mouse.down, onMousePress);
 			window.addEvent(AGJ.event.mouse.move, onMouseMove);
@@ -319,17 +319,11 @@
 
 		var container = $("content");
 		var pageSize = $(window).getSize();
-		canvas = new Element("canvas", { id: "canvas", width: pageSize.x, height: pageSize.y } );
+		canvas = new Element("canvas", { id: "canvas", width: pageSize.x * devicePixelRatio, height: pageSize.y * devicePixelRatio } );
 		container.appendChild(canvas);
-		cfg.context = canvas.getContext("2d");
+		var ctx = cfg.context = canvas.getContext("2d");
 
-		// Paint canvas of initial color.
-		var ctx = cfg.context;
-		// ctx.save();
-		// var color = cfg.mode[cfg.mode.all.name].color;
-		// ctx.fillStyle = "#" + color.toHex(6);
-		// ctx.fillRect(0, 0, canvasSize.x, canvasSize.y);
-		// ctx.restore();
+		ctx.scale(devicePixelRatio, devicePixelRatio);
 
 		// Paint old canvas image on new.
 		if (oldCanvas) {
