@@ -1,0 +1,14 @@
+{
+	"name": "flowerpattern",
+	"short_name": "flowerpattern",
+	"start_url": ".",
+	"display": "standalone",
+	"orientation": "portrait",
+	"background_color": "#000",
+	"description": "A drawing toy by agj.",
+	"icons": [{
+		"src": "img/icon.png",
+		"sizes": "180x180",
+		"type": "image/png"
+	}]
+}
