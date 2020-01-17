@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html manifest="flowerpattern.appcache">
+<head>
+	<meta charset="UTF-8" />
+	
+	<title>flowerpattern</title>
+
+	<link rel="icon" type="image/gif" href="http://www.agj.cl/icon.gif" />
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	
+	<!-- iOS icons -->
+	<link rel="apple-touch-icon-precomposed" href="img/icon-144.png" sizes="144x144" />
+	
+	<!-- old iPhone startup screen -->
+	<link rel="apple-touch-startup-image" href="img/startup-320x460.png"  media="(device-width: 320px) and (device-height: 480px)" />
+	<!-- iPhone retina startup screen -->
+	<link rel="apple-touch-startup-image" href="img/startup-640x920.png"  media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)" />
+	<!-- iPhone 5 startup screen -->
+	<link rel="apple-touch-startup-image" href="img/startup-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" />
+	<!-- iPad startup screens -->
+	<link rel="apple-touch-startup-image" href="img/startup-768x1004.png" media="(orientation: portrait)  and (device-width: 768px) and (device-height: 1024px)" />
+	<link rel="apple-touch-startup-image" href="img/startup-1024x748.png" media="(orientation: landscape) and (device-width: 768px) and (device-height: 1024px)" />
+	<!-- iPad retina startup screens -->
+	<link rel="apple-touch-startup-image" href="img/startup-1536x2008.png" media="(orientation: portrait)  and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" />
+	<link rel="apple-touch-startup-image" href="img/startup-2048x1496.png" media="(orientation: landscape) and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" />
+
+	<link href="css/style.less" rel="stylesheet/less" type="text/css" />
+	
+	<script src="js/libs/less.js" type="text/javascript"></script>
+	<script src="js/libs/mootools.js" type="text/javascript"></script>
+	<script src="js/libs/signals.js" type="text/javascript"></script>
+
+	<script src="js/agj/agj.js" type="text/javascript"></script>
+	<script src="js/agj/agj-draw.js" type="text/javascript"></script>
+	<script src="js/agj/agj-brush.js" type="text/javascript"></script>
+	<script src="js/agj/agj-brush-strokeplayer.js" type="text/javascript"></script>
+	<script src="js/classes.js" type="text/javascript"></script>
+	<script src="js/script.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+
+	<header id="colophon">
+		<h1><a href="http://blog.agj.cl/tag/flower-pattern">flower pattern,</a> by <a href="http://www.agj.cl/">agj</a></h1>
+		
+		<p class="tip tip-touch">
+			try it on a tablet or smartphone: <em>agj.cl/ip/fp</em>
+		</p>
+		<p class="tip tip-ios-homescreen">
+			try <a href="http://www.apple.com/ios/add-to-home-screen/">adding it to your home screen</a>
+		</p>
+		<p class="tip tip-ios-screenshot">
+			save the image by <a href="http://www.apple.com/itunes/inside-itunes/2010/04/how-to-grab-screenshots-on-iphone-ipad-and-ipod-touch.html">pressing home+sleep</a>
+		</p>
+	</header>
+
+	<aside id="menu">
+		<nav id="modes">
+			<ul>
+				<li class="mode mode-star">star mode</li>
+				<li class="mode mode-wave">wave mode</li>
+				<li class="mode mode-chain">chain mode</li>
+				<li class="mode mode-grid">grid mode</li>
+				<li class="mode mode-plain">plain mode</li>
+			</ul>
+		</nav>
+		<div id="options">
+			<ul>
+				<li class="option option-fade">fade</li>
+				<li class="option option-color">color</li>
+			</ul>
+		</div>
+	</aside>
+	
+	<aside id="message">
+		<h1 class="topic"></h1>
+	</aside>
+	
+	<article id="content">
+		<p style="background: #eee; color: #000">
+			<em>Flower pattern</em> is a drawing toy that has been designed for modern browsers, as well as iOS and Android devices.
+			If you're reading this, something isn't working correctly.
+			I encourage you to get an up-to-date browser such as <a href="https://www.mozilla.org/firefox">Firefox</a> or <a href="http://www.google.com/chrome">Chrome</a>.
+		</p>
+	</article>
+
+
+</body>
+</html>
