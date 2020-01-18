@@ -19,7 +19,7 @@
 	var cfg = {
 		scale: 1,
 		scaleBreakPoint: 600, // px of either width or height
-		scaleSmall: 0.75,
+		scaleSmall: 0.5,
 
 		mode: {
 			all: {
@@ -60,7 +60,7 @@
 						min: 100, // px
 						max: 350 // px 350
 					},
-					maxRepetitions: 40
+					maxRepetitions: 60
 				}
 			},
 			wave: {
@@ -93,10 +93,6 @@
 				]
 			},
 			weight: 5
-			// {
-			// 	index: 1,
-			// 	list: [3, 5, 9]
-			// }
 		},
 		erase: {
 			enabled: true,

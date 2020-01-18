@@ -492,16 +492,17 @@
 
 		_getInterSpace: function () { // Number
 			var cfgGrid = this._cfg.mode.grid;
-			var min = cfgGrid.stroke.separation.min;
+			var min = cfgGrid.stroke.separation.min * this._cfg.scale;
+			var max = cfgGrid.stroke.separation.max * this._cfg.scale;
 			var canvas = this._cfg.context.canvas;
 
 			var maxRepetitions = Math.pow(Math.sqrt(cfgGrid.stroke.maxRepetitions) - 2.8, 2);
 			var hardMin = Math.sqrt(canvas.width * canvas.height / maxRepetitions);
 			min = Math.max(hardMin, min);
 
-			var space = Math.random() * Math.max(cfgGrid.stroke.separation.max - min, 0) + min;
+			var space = Math.random() * Math.max(max - min, 0) + min;
 
-			trace("min", cfgGrid.stroke.separation.min, "maxRepetitions", cfgGrid.stroke.maxRepetitions, maxRepetitions, "hardMin", hardMin, "space", space);
+			trace("min", min, "maxRepetitions", cfgGrid.stroke.maxRepetitions, maxRepetitions, "hardMin", hardMin, "space", space);
 			return space;
 		},
 
