@@ -620,7 +620,10 @@
 			this._leadStrokes.remove(stroke);
 			var nodes = stroke.nodes;
 			var delayOffset = -nodes[0].delay - nodes[1].delay;
-			var separation = AGJ.number.randomInt(this._cfg.mode.wave.stroke.separation.max - this._cfg.mode.wave.stroke.separation.min) + this._cfg.mode.wave.stroke.separation.min;
+			var separation =
+				(AGJ.number.randomInt(this._cfg.mode.wave.stroke.separation.max - this._cfg.mode.wave.stroke.separation.min)
+					+ this._cfg.mode.wave.stroke.separation.min)
+				* this._cfg.scale;
 			var scaleFactor = Math.random() * (this._cfg.mode.wave.stroke.scale.max - this._cfg.mode.wave.stroke.scale.min) + this._cfg.mode.wave.stroke.scale.min;
 			var angle = Point.fromObject(nodes[1]).subtract(Point.fromObject(nodes[0])).toRadians() + (Math.PI * 0.5);
 			for (var i = 0; i < this._cfg.mode.wave.stroke.repetitions; i++) {
