@@ -17,12 +17,14 @@
 	var Signal = signals.Signal;
 
 	var cfg = {
+		scale: 1,
+		scaleBreakPoint: 600, // px of either width or height
+		scaleSmall: 0.75,
+
 		mode: {
 			all: {
 				name: "star",
 				stroke: {
-					// duplicateInterval: 60, // ms
-					// repeatedInterval: 200, // ms
 					continuousMemoryTime: 800 // ms
 				}
 			},
@@ -90,10 +92,11 @@
 					0xa100ff
 				]
 			},
-			weight: {
-				index: 1,
-				list: [3, 5, 9]
-			}
+			weight: 5
+			// {
+			// 	index: 1,
+			// 	list: [3, 5, 9]
+			// }
 		},
 		erase: {
 			enabled: true,
@@ -219,8 +222,6 @@
 		if (cfg.erase.enabled) {
 			cfg.context.save();
 			cfg.context.globalCompositeOperation = "destination-out";
-			// var color = cfg.mode[cfg.mode.all.name].color;
-			// cfg.context.fillStyle = "rgba(" + (color >> 16 & 0xff) +  ", " + (color >> 8 & 0xff) + ", " + (color & 0xff) + ", " + cfg.erase.strength + ")";
 			cfg.context.fillStyle = "rgba(0, 0, 0, " + cfg.erase.strength + ")";
 			cfg.context.fillRect(0, 0, canvas.width, canvas.height);
 			cfg.context.restore();
@@ -241,7 +242,7 @@
 		strokes[id] = {
 			stroke: stroke,
 			color: (cfg.stroke.color.use) ? cfg.stroke.color.list[cfg.stroke.color.index] : cfg.stroke.color.none,
-			weight: cfg.stroke.weight.list[cfg.stroke.weight.index]
+			weight: cfg.stroke.weight * cfg.scale
 		};
 
 		stroke.nodes[0].getData().style = getStrokeStyle(id);
@@ -320,6 +321,10 @@
 		var container = $("content");
 		var pageSize = $(window).getSize();
 		canvas = new Element("canvas", { id: "canvas", width: pageSize.x * devicePixelRatio, height: pageSize.y * devicePixelRatio } );
+		canvas.set('styles', {
+			width: pageSize.x,
+			height: pageSize.y
+		});
 		container.appendChild(canvas);
 		var ctx = cfg.context = canvas.getContext("2d");
 
@@ -332,6 +337,7 @@
 				angle += 360;
 			}
 			ctx.save();
+			ctx.scale(1 / devicePixelRatio, 1 / devicePixelRatio);
 			if (angle === 90 || angle === 180)
 				ctx.translate(canvas.width, 0);
 			if (angle === 270 || angle === 180)
@@ -343,6 +349,13 @@
 			oldCanvas.destroy();
 		}
 		orientation = window.orientation;
+
+		// Change scale.
+		if (pageSize.x > cfg.scaleBreakPoint && pageSize.y > cfg.scaleBreakPoint) {
+			cfg.scale = 1;
+		} else {
+			cfg.scale = cfg.scaleSmall;
+		}
 	}
 
 	function retrieveCookies() {

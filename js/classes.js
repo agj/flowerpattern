@@ -154,18 +154,12 @@
 			//trace("StrokePlayerBase: Drawing curve.", this._centerOffset, this._offset);
 			if (!dontTransformPoints)
 				this._transformPoints(pt1, pt2, pt3);
-			// var canvas = this._cfg.context.canvas;
-			// if (!this._pointIsInside(this._pt1.copy(pt1).add(pointCenter), 0, 0, canvas.width, canvas.height) && !this._pointIsInside(this._pt2.copy(pt2).add(pointCenter), 0, 0, canvas.width, canvas.height) && !this._pointIsInside(this._pt3.copy(pt3).add(pointCenter), 0, 0, canvas.width, canvas.height))
-			// 	return;
 			this._super("_drawCurve")(this._cfg.context, pointCenter, pt1, pt2, pt3, color, alpha, weight);
 		},
 
 		_drawEnd: function (context2D, pointCenter, pt1, pt2, color, alpha, weight, dontTransformPoints) {
 			if (!dontTransformPoints)
 				this._transformPoints(pt1, pt2);
-			// var canvas = this._cfg.context.canvas;
-			// if (!this._pointIsInside(this._pt1.copy(pt1).add(pointCenter), 0, 0, canvas.width, canvas.height) && !this._pointIsInside(this._pt2.copy(pt2).add(pointCenter), 0, 0, canvas.width, canvas.height))
-			// 	return;
 			this._super("_drawEnd")(this._cfg.context, pointCenter, pt1, pt2, color, alpha, weight);
 		},
 
@@ -452,17 +446,6 @@
 
 			this._super("addStroke")(stroke);
 
-			/*
-			var cfgGrid = this._cfg.mode.grid;
-			this._interSpace = AGJ.number.randomInt(cfgGrid.stroke.separation.max - cfgGrid.stroke.separation.min) + cfgGrid.stroke.separation.min;
-			this._pushStrokePlayerExtended(
-				new StrokePlayerGrid(this._cfg, stroke, {
-					period: new Point(this._interSpace, this._interSpace)
-				} ),
-				true
-			);
-			*/
-
 			if (!this._hasStrokeInMemory) {
 				this._hasStrokeInMemory = true;
 				this._interSpace = this._getInterSpace();
@@ -483,7 +466,6 @@
 				var offset = this._offsets[i];
 				var rotation = this._rotations[i];
 				var mirror = this._mirrorings[i];
-				// var delay = Math.max(Math.abs(offset.x), Math.abs(offset.y)) * cfgGrid.stroke.delay;
 				var hAreaW = area.width * 0.5, hAreaH = area.height * 0.5;
 				var delay = Math.max(hAreaW - Math.abs(offset.x - hAreaW), hAreaH - Math.abs(offset.y - hAreaH)) * this._cfg.mode.grid.stroke.delay;
 
@@ -496,13 +478,6 @@
 						offset: offset,
 						mirrorH: mirror
 					} ),
-					// new StrokePlayerBase(this._cfg, stroke, {
-					// 	delay: delay,
-					// 	rotation: rotation,
-					// 	centerOffset: centerOffset,
-					// 	offset: offset,
-					// 	mirrorH: mirror
-					// } ),
 					delay === 0
 				);
 			}
@@ -553,14 +528,6 @@
 					count++;
 				}
 			}
-			// for (var x = -hRepetitions; x < hRepetitions; x++) {
-			// 	for (var y = -vRepetitions; y < vRepetitions; y++) {
-			// 		this._offsets[count] = new Point(x * space, y * space);
-			// 		this._mirrorings[count] = mirror && (mirrorOnX ? x : y) % 2 !== 0;
-			// 		this._rotations[count] = (rotate && (!mirrorOnX ? x : y) % 2 !== 0) ? Math.PI : 0;
-			// 		count++;
-			// 	}
-			// }
 		},
 
 		_getRepetitions: function (total, distance) { // Number
@@ -589,7 +556,6 @@
 		_drawCurve: function (context2D, pointCenter, pt1, pt2, pt3, color, alpha, weight) {
 			this._transformPoints(pt1, pt2, pt3);
 
-			// this._rect.set(0, 0, this._cfg.context.canvas.width, this._cfg.context.canvas.height);
 			this._pt1.copy(pt1).add(pointCenter);
 			var area = this._options.area;
 
@@ -626,129 +592,6 @@
 			}
 		}
 	}));
-
-	/*
-	var StrokePlayerGrid = defineModule(flowerpattern, "StrokePlayerGrid", StrokePlayerBase.extend({
-		init: function (config, stroke, options) {
-			this._origin = new Point();
-
-			this._super("init")(config, stroke, options);
-		},
-
-		_drawCurve: function (context2D, pointCenter, pt1, pt2, pt3, color, alpha, weight) {
-			this._transformPoints(pt1, pt2, pt3);
-			this._offsetPoints(pointCenter, this._options.period, pt1, pt2, pt3);
-			var lenX = Math.ceil(this._cfg.context.canvas.width / this._options.period.x) + 1;
-			var lenY = Math.ceil(this._cfg.context.canvas.height / this._options.period.y) + 1;
-			var f = this._fix;
-			var prd = this._options.period;
-			// trace("-->", pt1.toString(), lenX, lenY, prd);
-			for (var x = -1; x < lenX; x++) {
-				for (var y = -1; y < lenY; y++) {
-					this._super("_drawCurve")(context2D, this._origin, f(pt1, prd, x, y), f(pt2, prd, x, y), f(pt3, prd, x, y), color, alpha, weight, true);
-				}
-			}
-		},
-
-		_drawEnd: function (context2D, pointCenter, pt1, pt2, color, alpha, weight) {
-			this._transformPoints(pt1, pt2);
-			this._offsetPoints(pointCenter, this._options.period, pt1, pt2);
-			this._super("_drawEnd")(context2D, this._origin, pt1, pt2, color, alpha, weight, true);
-		},
-
-		_offsetPoints: function (center, pointPeriod) {
-			var offsetX, offsetY;
-			for (var i = 2, len = arguments.length; i < len; i++) {
-				var pt = arguments[i];
-				if (!pt)
-					continue;
-				pt.add(center);
-				if (isNaN(offsetX)) {
-					offsetX = pt.x - pt.x % pointPeriod.x;
-					offsetY = pt.y - pt.y % pointPeriod.y;
-				}
-				pt.x -= offsetX;
-				pt.y -= offsetY;
-			}
-		},
-		_fix: function (point, pointPeriod, x, y) {
-			if ((x+1) % 2 === 0)
-				return new Point(point.x + (pointPeriod.x * x), point.y + (pointPeriod.y * y));
-			else
-				return new Point((pointPeriod.x * x) - point.x, point.y + (pointPeriod.y * y));
-		}
-	}));
-	*/
-	
-	/*
-	var StrokePlayerPortal = defineModule(flowerpattern, "StrokePlayerPortal", StrokePlayerBase.extend({
-		init: function (config, stroke, options) {
-			this._super("init")(config, stroke, options);
-
-			this._inclusiveArea = this._options.area.clone().grow(20, 20);
-			this._exclusiveArea = this._options.area.clone().grow(-20, -20);
-		},
-
-		_drawCurve: function (context2D, pointCenter, pt1, pt2, pt3, color, alpha, weight) {
-			this._transformPoints(pt1, pt2, pt3);
-			// this._super("_drawCurve")(this._cfg.context, pointCenter, pt1, pt2, pt3, color, alpha, weight, true);
-
-			var displacement = this._getDisplacementRequirement(pt1, pt3 ? pt3 : pt2, pointCenter);
-			if (displacement.drawOriginal)
-				this._super("_drawCurve")(this._cfg.context, pointCenter, pt1, pt2, pt3, color, alpha, weight, true);
-			if (displacement.displacedCenter)
-				this._super("_drawCurve")(this._cfg.context, displacement.displacedCenter, pt1, pt2, pt3, color, alpha, weight, true);
-		},
-
-		_drawEnd: function (context2D, pointCenter, pt1, pt2, color, alpha, weight) {
-			this._transformPoints(pt1, pt2);
-			// this._super("_drawEnd")(this._cfg.context, pointCenter, pt1, pt2, color, alpha, weight, true);
-
-			var displacement = this._getDisplacementRequirement(pt1, pt2, pointCenter);
-			if (displacement.drawOriginal)
-				this._super("_drawEnd")(this._cfg.context, pointCenter, pt1, pt2, color, alpha, weight, true);
-			if (displacement.displacedCenter)
-				this._super("_drawEnd")(this._cfg.context, displacement.displacedCenter, pt1, pt2, color, alpha, weight, true);
-		},
-
-		_getDisplacementRequirement: function (ptA, ptB, center) {
-			var rect = new Rectangle(ptA.x + center.x, ptA.y + center.y, ptB.x, ptB.y);
-			// trace(rect, this._options.area);
-			var result = {
-				drawOriginal: true,
-				displacedCenter: null
-			};
-
-			if (this._exclusiveArea.contains(rect)) {
-				return result;
-			} else {
-				if (this._inclusiveArea.excludes(rect))
-					result.drawOriginal = false;
-
-				var displaceX = 0, displaceY = 0;
-				if (rect.getLeft() < this._options.area.getLeft())
-					displaceX = 1;
-				else if (rect.getRight() > this._options.area.getRight())
-					displaceX = -1;
-				if (rect.getTop() < this._options.area.getTop())
-					displaceY = 1;
-				else if (rect.getBottom() > this._options.area.getBottom())
-					displaceY = -1;
-
-				if (displaceX || displaceY) {
-					center = center.clone();
-					if (displaceX)
-						center.x += this._options.area.width * displaceX;
-					if (displaceY)
-						center.y += this._options.area.height * displaceY;
-					result.displacedCenter = center;
-				}
-			}
-
-			return result;
-		}
-	}));
-	*/
 
 	/////
 

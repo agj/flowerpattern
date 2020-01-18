@@ -43,11 +43,8 @@
 			this._pt1 = new Point();
 			this._pt2 = new Point();
 			this._ds = new DrawStyle();
-			// this._timeoutCallback = AGJ.getCallback(this._onTimer, null, this);
-			// this._liveStrokeModifiedCallback = AGJ.getCallback(this._onLiveStrokeModified, null, this);
 
 			this._drawTime = AGJ.getTime() + (isNaN(numberDelay) ? 0 : numberDelay);
-			// this._wait();
 			this._walk();
 		},
 
@@ -101,32 +98,6 @@
 			this._nodeIndex++;
 			//this._wait();
 		},
-
-		/*
-		_wait: function () {
-			//AGJ.trace("StrokePlayer: Waiting.", this._nodeIndex, this._stroke.nodes.length, this._stroke.getIsLive(), this._stroke, this._timeout);
-			if (this._nodeIndex < this._stroke.nodes.length) {
-				var now = AGJ.getTime();
-				var node = this._stroke.nodes[this._nodeIndex];
-
-				this._drawTime += node.delay;
-
-				// if (this._drawTime <= now) {
-				// 	this._takeStep();
-				// } else {
-					clearTimeout(this._timeout);
-					this._timeout = setTimeout(AGJ.getCallback(this._onTimer, null, this), Math.max(this._drawTime - now, 0));
-				// }
-			} else if (this._stroke.getIsLive()) {
-				this._stroke.getModified().addOnce(AGJ.getCallback(this._onLiveStrokeModified, null, this));
-			} else if (this._nodeIndex === this._stroke.nodes.length) {
-				this._takeStep();
-				if (this._finished && this._finished.getNumListeners() > 0)
-					this._finished.dispatch();
-				this.destroy();
-			}
-		},
-		*/
 
 		_calculateDraw: function (arrayStrokeNodes, nodeIndex, pointCenter, strokeStyle) {
 			var len = arrayStrokeNodes.length;
@@ -228,8 +199,6 @@
 			// AGJ.trace("StrokePlayer: Stroke modified.", this._isDestroyed, this._id);
 			if (this._isDestroyed)
 				return;
-			// this._stroke.getModified().remove(this._liveStrokeModifiedCallback);
-			//this._wait();
 			this._walk();
 		},
 
