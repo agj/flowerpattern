@@ -3,7 +3,11 @@ CACHE MANIFEST
 
 index.html
 
+# Styles
+
 css/style.less
+
+# Scripts
 
 js/libs/less.js
 js/libs/mootools.js
@@ -21,12 +25,4 @@ js/script.js
 
 http://www.agj.cl/icon.gif
 
-img/icon-144.png
-
-img/startup-320x460.png
-img/startup-640x920.png
-img/startup-640x1096.png
-img/startup-768x1004.png
-img/startup-1024x748.png
-img/startup-1536x2008.png
-img/startup-2048x1496.png
+img/icon.png
