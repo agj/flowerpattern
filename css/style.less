@@ -28,6 +28,7 @@
 html, body {
 	margin: 0;
 	padding: 0;
+	user-select: none;
 }
 body {
 	color: @base;
@@ -41,7 +42,6 @@ body {
 
 	cursor: crosshair;
 	overflow: hidden;
-	touch-action: none;
 
 	.body-mode-style (@color) {
 		background: @color;
@@ -193,8 +193,8 @@ h1, p {
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	margin-left: 7.75em;
-	margin-top: 3.1em;
+	margin-left: -7.75em;
+	margin-top: -3.1em;
 	display: none;
 
 	&.active {

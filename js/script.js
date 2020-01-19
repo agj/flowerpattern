@@ -424,8 +424,9 @@
 	///// Events.
 
 	function onTouchPress(e) {
-		//trace("Touch press.", e, strokes);
-		if (e.target instanceof Element && e.target.get("tag") === "a")
+		trace("Touch press.", e)
+		trace("targetIsLink(e)", targetIsLink(e));
+		if (targetIsLink(e))
 			return;
 
 		endOrphanedStrokes(e);
@@ -447,8 +448,12 @@
 	}
 
 	function onTouchRelease(e) {
-		//trace("Touch release.", e, strokes);
-		for (var i = 0, len = e.changedTouches.length; i < len; i++) {
+		trace("Touch release.", e);
+		trace("targetIsLink(e)", targetIsLink(e));
+		if (targetIsLink(e))
+			return;
+
+			for (var i = 0, len = e.changedTouches.length; i < len; i++) {
 			var touch = e.changedTouches[i];
 			endStroke(touch.identifier);
 		}
@@ -456,7 +461,8 @@
 	}
 
 	function onMousePress(e) {
-		if (e.target instanceof Element && e.target.get("tag") === "a")
+		// trace("Mouse press", e);
+		if (targetIsLink(e))
 			return;
 
 		mouseDrawing = true;
@@ -476,6 +482,10 @@
 	function onMouseRelease(e) {
 		mouseDrawing = false;
 		endStroke("mouse");
+	}
+
+	function targetIsLink(e) {
+		return e.target && e.target.nodeName === "A"
 	}
 
 	function onInterval() {
